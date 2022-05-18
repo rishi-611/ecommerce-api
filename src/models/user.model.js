@@ -62,6 +62,14 @@ userSchema.methods.isPasswordMatch = async function (candidatePassword) {
   return isPasswordCorrect;
 };
 
+//remove password before sending userdata to client
+userSchema.methods.toJSON = function () {
+  const user = this;
+  const userObj = user.toObject();
+  delete userObj.password;
+  return userObj;
+};
+
 const User = mongoose.model("User", userSchema);
 
 module.exports = { User };

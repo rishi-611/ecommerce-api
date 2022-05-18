@@ -7,6 +7,8 @@ const getUserById = async (id) => {
   return user;
 };
 
+//creates user in db
+//required fields: {username, password, userType}
 const createUser = async (userData) => {
   if (await User.isUsernameTaken(userData.username)) {
     throw new ApiError(httpStatus.OK, `Username already taken`);
