@@ -5,7 +5,9 @@ const ApiError = require("../utils/ApiError");
 
 //returns catalogue associated to the seller, whose id is provided as argument
 const getCatalogueBySellerId = async (sellerId) => {
-  const catalogue = await Catalogue.findOne({ seller: sellerId });
+  const catalogue = await Catalogue.findOne({ seller: sellerId })
+    .populate("products")
+    .exec();
 
   return catalogue;
 };
