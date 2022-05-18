@@ -1,24 +1,32 @@
 const httpStatus = require("http-status");
 const { Catalogue } = require("../models");
+const productService = require("./product.service");
 const ApiError = require("../utils/ApiError");
-
-//create catalogue for the logged in user
-//items is a list of objects {name, price}
-const createCatalogue = async (seller, items) => {
-  const catalogue = new Catalogue({
-    seller,
-    products: items,
-  });
-
-  await catalogue.save();
-
-  return catalogue;
-};
 
 //returns catalogue associated to the seller, whose id is provided as argument
 const getCatalogueBySellerId = async (sellerId) => {
   const catalogue = await Catalogue.findOne({ seller: sellerId });
 
+  return catalogue;
+};
+
+//creates catalogue for a seller, if the seller does not already have a catalogue
+const createCatalogue = async (seller, items) => {
+  //for each item, either retrive the existing product from database, or create a new product in db
+  const products = await Promise.all(
+    items.map(async (item) => {
+      //find if product already exists in db
+      const existingProduct = await productService.getProductByDetails(item);
+      if (existingProduct) return existingProduct;
+
+      //else create new product in db and return
+      const product = await productService.createProduct(item);
+      return product;
+    })
+  );
+
+  const catalogue = new Catalogue({ seller, products });
+  await catalogue.save();
   return catalogue;
 };
 

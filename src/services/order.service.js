@@ -7,4 +7,8 @@ const getOrdersBySellerId = async (seller_id) => {
   return orders;
 };
 
+//create order from a list of products,
+//items array contains a list of product ids
+const createOrder = async (items) => {};
+
 module.exports = { getOrdersBySellerId };

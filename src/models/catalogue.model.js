@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const { ProductSchema } = require("./product.model");
 
 const catalogueSchema = mongoose.Schema(
   {
@@ -11,7 +10,8 @@ const catalogueSchema = mongoose.Schema(
     },
     products: [
       {
-        type: ProductSchema,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Product",
       },
     ],
   },
