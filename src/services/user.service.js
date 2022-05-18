@@ -17,13 +17,41 @@ const createUser = async (userData) => {
   return user;
 };
 
+// login user if he provides correct {username, password}
+const login = async (username, password) => {
+  const user = await getUserByUsername(username);
+  if (!user)
+    throw new ApiError(
+      httpStatus.UNAUTHORIZED,
+      "Incorrect username or password"
+    );
+
+  const passMatches = await user.isPasswordMatch(password);
+  if (!passMatches)
+    throw new ApiError(
+      httpStatus.UNAUTHORIZED,
+      "Incorrect username or password"
+    );
+
+  return user;
+};
+
 const getUserByUsername = async (username) => {
   const user = await User.findOne({ username });
   return user;
 };
 
+//returns a list of all users whose usertype is seller
+const getAllSellers = async () => {
+  //find all users, whose userType is seller
+  const sellers = await User.find({ userType: "seller" });
+  return sellers;
+};
+
 module.exports = {
-  getUserById,
   createUser,
+  login,
   getUserByUsername,
+  getUserById,
+  getAllSellers,
 };

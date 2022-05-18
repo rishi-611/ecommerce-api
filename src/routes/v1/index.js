@@ -1,12 +1,12 @@
 const express = require("express");
-// const userRoute = require("./user.route");
 const authRoute = require("./auth.route");
-// const productRoute = require("./product.route");
+const buyerRoute = require("./buyer.route");
+const sellerRoute = require("./seller.route");
 const router = express.Router();
 
-// router.use("/products", productRoute);
-// router.use("/users", userRoute);
 router.use("/auth", authRoute);
+router.use("/buyer", buyerRoute);
+router.use("/seller", sellerRoute);
 
 router.get("/", async (req, res) => {
   res.json({ message: "hello" });

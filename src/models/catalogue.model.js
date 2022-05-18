@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { ProductSchema } = require("./product.model");
 
 const catalogueSchema = mongoose.Schema(
   {
@@ -6,11 +7,11 @@ const catalogueSchema = mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
+      unique: true, // all sellers can have only one catalogue
     },
     products: [
       {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Product",
+        type: ProductSchema,
       },
     ],
   },
