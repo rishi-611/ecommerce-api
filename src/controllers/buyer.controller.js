@@ -18,6 +18,22 @@ const getCatalogue = catchAsync(async (req, res) => {
 const createOrder = catchAsync(async (req, res) => {
   const { buyer, seller, items } = req.body;
 
+  //throw error if seller does not exist
+  if (!(await userService.getSellerById(seller))) {
+    throw new ApiError(
+      httpStatus.BAD_REQUEST,
+      `seller with id ${seller} does not exist`
+    );
+  }
+
+  //throw error if buyer does not exist
+  if (!(await userService.getBuyerById(buyer))) {
+    throw new ApiError(
+      httpStatus.BAD_REQUEST,
+      `buyer with id ${buyer} does not exist`
+    );
+  }
+
   const order = await orderService.createOrder(buyer, seller, items);
 
   res.send(order);
