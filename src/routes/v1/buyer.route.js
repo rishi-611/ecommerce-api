@@ -23,6 +23,11 @@ router
 
 router
   .route("/create-order")
-  .post(auth(), authorizeBuyer, buyerController.createOrder);
+  .post(
+    auth(),
+    authorizeBuyer,
+    validate(buyerValidation.createOrder),
+    buyerController.createOrder
+  );
 
 module.exports = router;
