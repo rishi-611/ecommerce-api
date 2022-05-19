@@ -3,11 +3,13 @@ const catchAsync = require("../utils/catchAsync");
 const { userService, catalogueService, orderService } = require("../services");
 const ApiError = require("../utils/ApiError");
 
+//return a list of all sellers
 const getAllSellers = catchAsync(async (req, res) => {
   const sellers = await userService.getAllSellers();
   res.send(sellers);
 });
 
+//return catalogue associated with seller, seller id is provided as req params
 const getCatalogue = catchAsync(async (req, res) => {
   const { seller_id } = req.params;
   const catalogue = await catalogueService.getCatalogueBySellerId(seller_id);
@@ -15,6 +17,7 @@ const getCatalogue = catchAsync(async (req, res) => {
   res.send(catalogue);
 });
 
+//create order from list of items provided
 const createOrder = catchAsync(async (req, res) => {
   const { items } = req.body;
   const seller = req.params.seller_id;

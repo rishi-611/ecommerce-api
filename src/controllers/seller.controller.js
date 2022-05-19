@@ -20,9 +20,7 @@ const createCatalogue = catchAsync(async (req, res) => {
   }
 
   //create new catalogue and send to client
-  console.log("creating catalogue");
   const catalogue = await catalogueService.createCatalogue(seller, items);
-  console.log(catalogue);
   res.status(httpStatus.CREATED).send(catalogue);
 });
 
