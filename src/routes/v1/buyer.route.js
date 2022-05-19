@@ -22,10 +22,11 @@ router
   );
 
 router
-  .route("/create-order")
+  .route("/create-order/:seller_id")
   .post(
     auth(),
     authorizeBuyer,
+    validate(buyerValidation.seller_id),
     validate(buyerValidation.createOrder),
     buyerController.createOrder
   );

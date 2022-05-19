@@ -53,11 +53,6 @@ const getSellerById = async (sellerId) => {
   return seller;
 };
 
-const getBuyerById = async (buyerId) => {
-  const buyer = await User.findOne({ _id: buyerId, userType: "buyer" });
-  return buyer;
-};
-
 module.exports = {
   createUser,
   login,
@@ -65,5 +60,4 @@ module.exports = {
   getUserById,
   getAllSellers,
   getSellerById,
-  getBuyerById,
 };

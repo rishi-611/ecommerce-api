@@ -9,8 +9,6 @@ const seller_id = {
 
 const createOrder = {
   body: Joi.object().keys({
-    buyer: Joi.string().custom(objectId).required(),
-    seller: Joi.string().custom(objectId).required(),
     items: Joi.array().items(Joi.string().custom(objectId)).required(),
   }),
 };
