@@ -1,6 +1,6 @@
 const httpStatus = require("http-status");
 const catchAsync = require("../utils/catchAsync");
-const { catalogueService } = require("../services");
+const { catalogueService, orderService } = require("../services");
 const ApiError = require("../utils/ApiError");
 
 const createCatalogue = catchAsync(async (req, res) => {
@@ -26,6 +26,14 @@ const createCatalogue = catchAsync(async (req, res) => {
   res.status(httpStatus.CREATED).send(catalogue);
 });
 
+const getOrders = catchAsync(async (req, res) => {
+  const seller = req.user._id;
+
+  const orders = await orderService.getOrders(seller);
+  res.send(orders);
+});
+
 module.exports = {
   createCatalogue,
+  getOrders,
 };

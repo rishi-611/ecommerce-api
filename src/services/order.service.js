@@ -43,4 +43,14 @@ const createOrder = async (buyer, seller, items) => {
   return order;
 };
 
-module.exports = { createOrder, getOrdersBySellerId };
+//returns all orders for a given seller
+const getOrders = async (sellerId) => {
+  const orders = await Order.find({ seller: sellerId })
+    .populate("buyer")
+    .populate("products")
+    .exec();
+
+  return orders;
+};
+
+module.exports = { createOrder, getOrdersBySellerId, getOrders };

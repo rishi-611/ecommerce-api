@@ -17,4 +17,8 @@ router
     sellerController.createCatalogue
   );
 
+router
+  .route("/orders")
+  .get(auth(), authorizeSeller, sellerController.getOrders);
+
 module.exports = router;
