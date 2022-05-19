@@ -9,6 +9,13 @@ const getCatalogueBySellerId = async (sellerId) => {
     .populate("products")
     .exec();
 
+  if (!catalogue) {
+    throw new ApiError(
+      httpStatus.NOT_FOUND,
+      "this seller does not have a catalogue"
+    );
+  }
+
   return catalogue;
 };
 
