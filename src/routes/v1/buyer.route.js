@@ -21,4 +21,8 @@ router
     buyerController.getCatalogue
   );
 
+router
+  .route("/create-order")
+  .post(auth(), authorizeBuyer, buyerController.createOrder);
+
 module.exports = router;

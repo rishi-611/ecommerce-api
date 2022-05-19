@@ -19,6 +19,19 @@ const getCatalogueBySellerId = async (sellerId) => {
   return catalogue;
 };
 
+//returns a list of all product ids from catalogue of seller
+const getProductsInCatalogue = async (seller) => {
+  const catalogue = await Catalogue.findOne({ seller });
+  if (!catalogue) {
+    throw new ApiError(
+      httpStatus.NOT_FOUND,
+      "this seller does not have a catalogue"
+    );
+  }
+
+  return catalogue.products;
+};
+
 //creates catalogue for a seller, if the seller does not already have a catalogue
 const createCatalogue = async (seller, items) => {
   //for each item, either retrive the existing product from database, or create a new product in db
@@ -42,4 +55,5 @@ const createCatalogue = async (seller, items) => {
 module.exports = {
   getCatalogueBySellerId,
   createCatalogue,
+  getProductsInCatalogue,
 };
