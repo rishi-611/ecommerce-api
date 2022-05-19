@@ -35,11 +35,7 @@ module.exports = {
   // Set mongoose configuration
   mongoose: {
     url: envVars.MONGODB_URL,
-    options: {
-      //   useCreateIndex: true,
-      //   useNewUrlParser: true,
-      //   useUnifiedTopology: true,
-    },
+    options: {},
   },
   jwt: {
     secret: envVars.JWT_SECRET,

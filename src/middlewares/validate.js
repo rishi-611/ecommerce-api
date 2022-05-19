@@ -18,12 +18,12 @@ const validate = (schema) => (req, res, next) => {
   // cherry-pick from the input schema ["params", "query", "body"] fields
   const validSchema = pick(schema, ["params", "query", "body"]);
 
-  // cherry-pick from the request object ["params", "query", "body"] fields
+  // cherry-pick from the request object ["params", "query", "body"] fields, which are present in schema
   const object = pick(req, Object.keys(validSchema));
 
   // Compile schema to Joi schema object and validate the request object
-  const { value, error } = Joi.compile(validSchema)
-    .prefs({ errors: { label: "key" } })
+  const { value, error } = Joi.compile(validSchema) //compile js object to joi schema
+    .prefs({ errors: { label: "key" } }) //if error occurs, label in the message should be the key variable causing the error
     .validate(object);
 
   // If validation fails throw 400 Bad Request error
