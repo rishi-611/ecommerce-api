@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const config = require("../config/config");
+const Catalogue = require("./catalogue.model");
 
 const userSchema = mongoose.Schema(
   {
@@ -50,6 +51,19 @@ userSchema.pre("save", async function (next) {
   if (user.isModified("password")) {
     user.password = await bcrypt.hash(user.password, 9);
   }
+  next();
+});
+
+// if user is a seller, delete associated catalogue before deleting user
+userSchema.pre("remove", async function (next) {
+  const user = this;
+
+  if (user.userType !== "seller") next();
+
+  const catalogue = await Catalogue.findOne({ seller: user._id });
+  if (!catalogue) next();
+
+  await catalogue.remove();
   next();
 });
 
