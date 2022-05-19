@@ -5,7 +5,7 @@ const ApiError = require("../utils/ApiError");
 const authorizeSeller = async (req, res, next) => {
   if (req.user.userType !== "seller") {
     next(
-      new ApiError(httpStatus.FORBIDDEN, "Only sellers can excess this route")
+      new ApiError(httpStatus.FORBIDDEN, "Only sellers can access this route")
     );
   }
 

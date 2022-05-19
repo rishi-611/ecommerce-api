@@ -8,8 +8,4 @@ router.use("/auth", authRoute);
 router.use("/buyer", buyerRoute);
 router.use("/seller", sellerRoute);
 
-router.get("/", async (req, res) => {
-  res.json({ message: "hello" });
-});
-
 module.exports = router;
